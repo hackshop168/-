@@ -4,8 +4,8 @@ const fetch = require("node-fetch");
 const app = express();
 const PORT = 3000;
 
-const BOT_TOKEN = "8068929944:AAHtsM5Yf--VwBDFg3b_paSkXADFRh8kuoo";
-const CHAT_ID = "-4898717294";
+const BOT_TOKEN = "8585877951:AAHrNFdoYjttj4B_CZmmvKKIAjwQ-78r_O4";
+const CHAT_ID = "-1003786383416";
 
 // เสิร์ฟไฟล์เว็บ
 app.use(express.static('public'));
